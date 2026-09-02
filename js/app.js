@@ -178,8 +178,8 @@
           var params = new URLSearchParams({
             action: "TEMPLATE", text: "The Agentic AI Leap — AITG × Akamai",
             dates: "20261103T010000Z/20261103T060000Z",
-            details: "Transforming Businesses from Digital to Autonomous. Marriott Hotel Penang, Ballroom.",
-            location: "Marriott Hotel Penang, Ballroom"
+            details: "Transforming Businesses from Digital to Autonomous. Penang Marriott Hotel, Ballroom.",
+            location: "Penang Marriott Hotel, Ballroom"
           });
           gcal.href = "https://calendar.google.com/calendar/render?" + params.toString();
         }
