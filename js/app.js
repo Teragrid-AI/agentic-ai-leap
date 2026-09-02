@@ -136,8 +136,7 @@
           company = document.getElementById("f-company"),
           email = document.getElementById("f-email"),
           phone = document.getElementById("f-phone"),
-          title = document.getElementById("f-title"),
-          interest = document.getElementById("f-interest");
+          title = document.getElementById("f-title");
 
       [name, email, phone].forEach(function (el) { el.classList.remove("invalid"); });
 
@@ -150,7 +149,7 @@
       btn.disabled = true;
       btn.textContent = "Registering…";
 
-      var notes = "Interest: " + (interest ? interest.value : "") + (title && title.value.trim() ? " · Title: " + title.value.trim() : "");
+      var notes = title && title.value.trim() ? "Title: " + title.value.trim() : null;
 
       fetch(API, {
         method: "POST",
