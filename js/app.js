@@ -88,6 +88,37 @@
     rafId = requestAnimationFrame(tick);
   }
 
+  /* ---------- 1b. Scroll effects ---------- */
+  var revealEls = document.querySelectorAll("[data-reveal]");
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add("revealed"); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+    revealEls.forEach(function (el) { io.observe(el); });
+  } else {
+    document.documentElement.classList.add("no-observer");
+  }
+  // subtle hero parallax: drift canvas content slower than scroll (desktop only)
+  if (canvas && window.matchMedia("(min-width: 861px)").matches) {
+    var hero = document.querySelector(".hero");
+    var lastY = -1, ticking = false;
+    window.addEventListener("scroll", function () {
+      lastY = window.scrollY;
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(function () {
+          if (hero && lastY < window.innerHeight) {
+            hero.style.transform = "translateY(" + (lastY * 0.18) + "px)";
+            hero.style.opacity = String(Math.max(0, 1 - lastY / (window.innerHeight * 0.9)));
+          }
+          ticking = false;
+        });
+      }
+    }, { passive: true });
+  }
+
   /* ---------- 2. Countdown ---------- */
   var EVENT_START = new Date("2026-11-03T09:00:00+08:00").getTime();
   var elD = document.getElementById("cd-d"), elH = document.getElementById("cd-h"),
