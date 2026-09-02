@@ -135,10 +135,15 @@
         h = Math.floor(diff % 86400000 / 3600000),
         m = Math.floor(diff % 3600000 / 60000),
         s = Math.floor(diff % 60000 / 1000);
-    if (elD) elD.textContent = pad(d);
-    if (elH) elH.textContent = pad(h);
-    if (elM) elM.textContent = pad(m);
-    if (elS) elS.textContent = pad(s);
+    [[elD, d], [elH, h], [elM, m], [elS, s]].forEach(function (pair) {
+      var el = pair[0], v = pad(pair[1]);
+      if (el && el.textContent !== v) {
+        el.textContent = v;
+        el.classList.remove("tick");
+        void el.offsetWidth; // restart animation
+        el.classList.add("tick");
+      }
+    });
     setTimeout(countdown, 1000);
   }
   if (cd) countdown();

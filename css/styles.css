@@ -96,13 +96,36 @@ main { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
 .fact b { display: block; font-size: 14.5px; letter-spacing: 0.4px; }
 .fact span { font-size: 12.5px; color: var(--muted); }
 
-.countdown { margin: 40px auto 0; display: flex; justify-content: center; gap: 14px; }
+.countdown { margin: 40px auto 0; display: flex; justify-content: center; gap: 18px; }
 .cd-cell {
-  min-width: 86px; padding: 14px 10px; border-radius: 14px;
-  background: var(--card); border: 1px solid var(--line);
+  min-width: 104px; padding: 18px 12px 14px; border-radius: 16px;
+  background: linear-gradient(180deg, rgba(16, 28, 54, 0.85), rgba(8, 14, 30, 0.9));
+  border: 1px solid rgba(255, 106, 43, 0.35);
+  box-shadow: 0 0 26px rgba(255, 106, 43, 0.16), inset 0 0 18px rgba(127, 216, 255, 0.05);
+  position: relative; overflow: hidden;
 }
-.cd-cell span { display: block; font-family: "Orbitron", monospace; font-size: 32px; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; }
-.cd-cell small { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--cyan-dim); }
+.cd-cell::before { /* scanline sheen */
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(127, 216, 255, 0.07) 46%, transparent 62%);
+  pointer-events: none;
+}
+.cd-cell span {
+  display: block; font-family: "Orbitron", sans-serif; font-size: 44px; font-weight: 800;
+  color: #fff; font-variant-numeric: tabular-nums; line-height: 1;
+  text-shadow: 0 0 18px rgba(255, 106, 43, 0.55);
+}
+.cd-cell small { display: block; margin-top: 9px; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--cyan-dim); }
+/* tick animation: number flips in */
+.cd-cell span.tick { animation: cd-tick 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+@keyframes cd-tick {
+  0%   { opacity: 0; transform: translateY(-55%) scale(0.94); filter: blur(3px); }
+  100% { opacity: 1; transform: none; filter: none; }
+}
+@media (min-width: 861px) {
+  .cd-cell { min-width: 128px; }
+  .cd-cell span { font-size: 56px; }
+}
+@media (prefers-reduced-motion: reduce) { .cd-cell span.tick { animation: none; } }
 
 .btn-primary {
   display: inline-block; margin-top: 42px; text-decoration: none; cursor: pointer;
@@ -226,9 +249,9 @@ main { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
 }
 @media (max-width: 480px) {
   .nav-logo { height: 26px; }
-  .countdown { gap: 8px; }
-  .cd-cell { min-width: 70px; }
-  .cd-cell span { font-size: 27px; }
+  .countdown { gap: 8px; flex-wrap: wrap; }
+  .cd-cell { min-width: 76px; padding: 12px 8px 10px; }
+  .cd-cell span { font-size: 30px; }
   .form-shell { padding: 28px 22px; }
   .venue-card { padding: 28px 24px; }
 }
