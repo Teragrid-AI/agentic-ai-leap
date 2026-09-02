@@ -34,8 +34,8 @@
       particles.push({
         x: x0, y: H + 10,
         vx: (Math.random() - 0.5) * 0.12,
-        vy: -(0.5 + Math.random() * 1.1),
-        r: 0.8 + Math.random() * 1.7,
+        vy: -(0.9 + Math.random() * 1.6),
+        r: 1.6 + Math.random() * 2.6,
         hue: trail.hue,
         life: 0,
         maxLife: 380 + Math.random() * 260,
@@ -53,13 +53,15 @@
         p.y += p.vy;
         if (p.y < -20 || p.life > p.maxLife) { particles.splice(i, 1); continue; }
         var fade = p.life < 40 ? p.life / 40 : Math.min(1, (p.maxLife - p.life) / 90);
-        a = fade * (0.55 + 0.45 * Math.sin(p.flicker + p.life * 0.08));
+        a = fade * (0.75 + 0.25 * Math.sin(p.flicker + p.life * 0.08));
         col = p.hue === "orange" ? "255,140,70" : "127,216,255";
-        // trail streak
-        ctx.strokeStyle = "rgba(" + col + "," + (a * 0.35).toFixed(3) + ")";
-        ctx.lineWidth = p.r * 0.9;
-        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x - p.vx * 26, p.y + 16); ctx.stroke();
-        // glow head
+        // trail streak (long)
+        ctx.strokeStyle = "rgba(" + col + "," + (a * 0.5).toFixed(3) + ")";
+        ctx.lineWidth = p.r * 1.4;
+        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x - p.vx * 26, p.y + 34); ctx.stroke();
+        // glow head: soft halo + bright core
+        ctx.fillStyle = "rgba(" + col + "," + (a * 0.25).toFixed(3) + ")";
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 3.2, 0, Math.PI * 2); ctx.fill();
         ctx.fillStyle = "rgba(" + col + "," + a.toFixed(3) + ")";
         ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
       }
@@ -74,10 +76,10 @@
       for (var k = 0; k < 4; k++) spawn(t);
     });
     timer = setInterval(function () {
-      if (particles.length < 90) {
+      if (particles.length < 190) {
         spawn(TRAILS[Math.floor(Math.random() * TRAILS.length)]);
       }
-    }, 240);
+    }, 90);
     document.addEventListener("visibilitychange", function () {
       if (document.hidden) {
         if (rafId) cancelAnimationFrame(rafId), rafId = null;
