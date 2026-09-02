@@ -111,7 +111,7 @@
   if (cd) countdown();
 
   /* ---------- 3. Registration form ---------- */
-  var API = "https://crm.aitg.com.my/api/lead";
+  var API = "https://api.aitg.com.my/api/lead";
   var COMPANY = "teragrid-demo";
 
   var form = document.getElementById("reg-form"),
